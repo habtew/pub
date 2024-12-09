@@ -4,11 +4,13 @@ import { faEnvelope, faSignIn, faUser } from '@fortawesome/free-solid-svg-icons'
 import { faRegistered } from "@fortawesome/free-regular-svg-icons";
 import { faCartShopping } from "@fortawesome/free-solid-svg-icons/faCartShopping";
 import { NavLink } from "react-router-dom";
-
+import { useSelector } from "react-redux";
 
 
 
 function Navbar() {
+
+  const state= useSelector((state)=> state.handleCart)
   return (
     <div>
       <nav className="navbar navbar-expand-lg bg-body-tertiary py-3 shadow-sm bg-white">
@@ -58,7 +60,7 @@ function Navbar() {
               <NavLink to="/register" className="btn btn-outline-dark ms-2">
               <FontAwesomeIcon icon={faRegistered}  className="me-1"/>Register</NavLink>
               <NavLink to="/cart" className="btn btn-outline-dark ms-2">
-              <FontAwesomeIcon icon={faCartShopping}  className="me-1"/>Cart(0)</NavLink>
+              <FontAwesomeIcon icon={faCartShopping}  className="me-1"/>Cart({state.length})</NavLink>
             </div>
           </div>
         </div>

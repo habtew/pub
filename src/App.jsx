@@ -3,7 +3,8 @@ import { Routes, Route } from "react-router-dom";
 import Navbar from "./Pages/Navbar";
 import Home from "./Pages/Home";
 import ProductDetails from "./Pages/ProductDetails";
-import Product from "./Pages/Product"; // Import Product component
+import Product from "./Pages/Product"; 
+import Cart from "./Pages/Cart"; 
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/products" element={<ProductDetails />} />
         <Route path="/product/:id" element={<Product />} /> {/* Ensure this route is set */}
+        <Route path="/cart" element={<Cart />} />
       </Routes>
     </>
   );

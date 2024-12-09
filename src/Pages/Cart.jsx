@@ -1,59 +1,41 @@
-import React, { useState, useEffect } from 'react';
-import { getCart, addToCart, removeFromCart, updateCartItem } from '../api/fakeStoreApi';
-import CartItem from './CartItem';
+import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faMinus, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { addCart, delCart } from '../redux/action'; 
+export default function Cart() {
+  const dispatch = useDispatch();
+  const cartItems = useSelector((state) => state.handleCart); // Replace 'cart' with your reducer name if different
 
-function Cart() {
-  const [cart, setCart] = useState([]);
-  const [total, setTotal] = useState(0);
-
-  useEffect(() => {
-    const fetchCart = async () => {
-      const data = await getCart();
-      setCart(data);
-      calculateTotal(data);
-    };
-    fetchCart();
-  }, []);
-
-  const calculateTotal = (items) => {
-    const totalAmount = items.reduce((acc, item) => acc + item.quantity * item.product.price, 0);
-    setTotal(totalAmount);
-  };
-
-  const handleQuantityChange = async (itemId, newQuantity) => {
-    await updateCartItem(itemId, newQuantity);
-    const updatedCart = await getCart();
-    setCart(updatedCart);
-    calculateTotal(updatedCart);
-  };
-
-  const handleRemoveItem = async (itemId) => {
-    await removeFromCart(itemId);
-    const updatedCart = await getCart();
-    setCart(updatedCart);
-    calculateTotal(updatedCart);
-  };
-
-  const handleCheckout = () => {
-    // Implement checkout logic here, e.g., redirect to a checkout page or process payment
+  const handleButton = (product, actionType) => {
+    if (actionType === 'add') {
+      dispatch(addCart(product));
+    } else {
+      dispatch(delCart(product));
+    }
   };
 
   return (
     <div>
-      <h2>Shopping Cart</h2>
-      {cart.length === 0 ? (
-        <p>Your cart is empty.</p>
-      ) : (
-        <>
-          {cart.map((item) => (
-            <CartItem key={item.id} item={item} onQuantityChange={handleQuantityChange} onRemove={handleRemoveItem} />
-          ))}
-          <p>Total: ${total}</p>
-          <button onClick={handleCheckout}>Checkout</button>
-        </>
-      )}
+      {cartItems.map((product) => (
+        <div className='row m-5' key={product.id}>
+          <div className="col-md-4">
+            <img src={product.image} alt={product.title} height="200px" width="180px" />
+          </div>
+          <div className="col-md-4">
+            <h3>{product.title}</h3>
+            <p className='lead fw-bold'>
+              {product.qty} X ${product.price} = ${product.qty * product.price}
+            </p>
+            <button className="btn btn-outline-dark me-4" onClick={() => handleButton(product, 'remove')}>
+              <FontAwesomeIcon icon={faMinus} className="me-1" />
+            </button>
+            <button className="btn btn-outline-dark me-4" onClick={() => handleButton(product, 'add')}>
+              <FontAwesomeIcon icon={faPlus} className="me-1" />
+            </button>
+          </div>
+        </div>
+      ))}
     </div>
   );
 }
-
-export default Cart;

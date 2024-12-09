@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 
+
 function ProductDetails() {
   const [data, setData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
   const [loading, setLoading] = useState(false);
 
+
+ 
   useEffect(() => {
     let componentMounted = true;
 
