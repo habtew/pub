@@ -51,14 +51,18 @@ function Navbar() {
                   Contact
                 </NavLink>
               </li>
+              <li className="nav-item">
+                <NavLink className="nav-link" to="/user">
+                  Users
+                </NavLink>
+              </li>
               
               
             </ul>
             <div className="buttons">
               <NavLink to="/login" className="btn btn-outline-dark">
               <FontAwesomeIcon icon={faSignIn}  className="me-1"/>Login</NavLink>
-              <NavLink to="/register" className="btn btn-outline-dark ms-2">
-              <FontAwesomeIcon icon={faRegistered}  className="me-1"/>Register</NavLink>
+              
               <NavLink to="/cart" className="btn btn-outline-dark ms-2">
               <FontAwesomeIcon icon={faCartShopping}  className="me-1"/>Cart({state.length})</NavLink>
             </div>
